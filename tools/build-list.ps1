@@ -1,5 +1,5 @@
 # Fetch the servant list from Atlas Academy and write data/servants.js
-# (collection number, servant id for the image URL, and rarity for the cost).
+# (collection number, servant id for the image URL, rarity for the cost, and the Japanese name).
 # Written as a .js file so index.html also works when opened straight from disk.
 # Usage: powershell -ExecutionPolicy Bypass -File tools/build-list.ps1
 
@@ -20,7 +20,8 @@ $entries = foreach ($s in $servants) {
     # face url ends with f_<id>0.png; figure images live under <id>
     $id = ([IO.Path]::GetFileNameWithoutExtension($s.face) -replace '^f_', '')
     $id = $id.Substring(0, $id.Length - 1)
-    '{no:' + [int]$s.collectionNo + ',id:' + $id + ',r:' + [int]$s.rarity + '}'
+    $name = $s.name.Replace('\', '\\').Replace('"', '\"')
+    '{no:' + [int]$s.collectionNo + ',id:' + $id + ',r:' + [int]$s.rarity + ',n:"' + $name + '"}'
 }
 
 $js = "window.SERVANTS = [" + ($entries -join ',') + "];`n"

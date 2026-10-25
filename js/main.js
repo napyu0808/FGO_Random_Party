@@ -75,7 +75,9 @@
       card.type = 'button';
       card.className = 'card';
       card.setAttribute('aria-label', `${i + 1}番目の枠`);
-      card.innerHTML = '<span class="back">?</span><img alt="" referrerpolicy="no-referrer"><span class="no"></span>';
+      card.innerHTML =
+        '<span class="back">?</span><img alt="" referrerpolicy="no-referrer">' +
+        '<span class="label"><span class="name"></span><span class="no"></span></span>';
       card.addEventListener('click', () => rerollSlot(i));
 
       const img = card.querySelector('img');
@@ -93,9 +95,10 @@
     const img = card.querySelector('img');
 
     card.classList.remove('has-image', 'drawn', 'reveal');
+    card.querySelector('.name').textContent = s.n || '';
     card.querySelector('.no').textContent = `No.${s.no}`;
     card.querySelector('.back').textContent = `No.${s.no}`;
-    card.setAttribute('aria-label', `${i + 1}番目の枠: No.${s.no}`);
+    card.setAttribute('aria-label', `${i + 1}番目の枠: No.${s.no} ${s.n || ''}`.trim());
     img.src = imageUrl(s);
 
     card.classList.add('drawn');

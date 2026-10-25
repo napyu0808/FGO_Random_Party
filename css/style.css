@@ -105,20 +105,42 @@ h1 {
 }
 .card.has-image img { display: block; }
 
-.card .no {
+/* name above the number, over a dark fade at the bottom of the card */
+.card .label {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 3cqw 0.4cqw 0.5cqw;
-  background: linear-gradient(180deg, transparent, rgba(8, 11, 22, 0.9));
-  font-size: 1.1cqw;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  padding: 4cqw 0.4cqw 0.5cqw;
+  background: linear-gradient(180deg, transparent, rgba(8, 11, 22, 0.92) 55%);
   text-align: center;
   display: none;
 }
-.card.drawn .no { display: block; }
+.card.drawn .label { display: block; }
+
+.card .name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  margin-bottom: 0.2cqw;
+  font-size: 1.05cqw;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #fff;
+  text-shadow: 0 0 0.4cqw #000, 0 0 0.8cqw #000;
+}
+.card .name:empty { display: none; }
+
+.card .no {
+  display: block;
+  font-size: 0.95cqw;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  text-shadow: 0 0 0.4cqw #000;
+}
 
 /* image missing or still loading: show the number on a plain panel */
 .card .back {

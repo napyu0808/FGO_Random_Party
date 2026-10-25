@@ -42,7 +42,7 @@ Atlas Academyから一覧を取得し直して `data/servants.js` を更新し�
 | パス | 役割 |
 |---|---|
 | `index.html`, `css/style.css`, `js/main.js` | ページ本体 |
-| `data/servants.js` | 図鑑番号・サーヴァントID・レアリティの一覧（`build-list.ps1` が生成） |
+| `data/servants.js` | 図鑑番号・サーヴァントID・レアリティ・日本語名の一覧（`build-list.ps1` が生成） |
 | `assets/party-bg.webp` | 背景（ゲーム内スクリーンショット） |
 | `tools/build-list.ps1` | 一覧の更新スクリプト |
 
