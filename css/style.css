@@ -1,0 +1,215 @@
+:root {
+  --bg: #0d1220;
+  --bg-2: #161d33;
+  --line: #3a4670;
+  --gold: #e6c46a;
+  --gold-dim: #9c8546;
+  --text: #e9ecf5;
+  --muted: #8d97b5;
+}
+
+* { box-sizing: border-box; }
+
+html { color-scheme: dark; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% -10%, #25305a 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg-2), var(--bg));
+  color: var(--text);
+  font-family: "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
+}
+
+main {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+header { text-align: center; }
+
+h1 {
+  margin: 0;
+  font-size: clamp(22px, 3.4vw, 34px);
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(230, 196, 106, 0.35);
+}
+
+#status {
+  margin: 6px 0 0;
+  min-height: 1.4em;
+  font-size: 14px;
+  color: var(--muted);
+}
+#status.error { color: #ff8f8f; }
+
+/* ---- formation screen ----
+   The screenshot is 1600x720. Everything inside is placed in percentages of that size,
+   so the slots and the cost box stay glued to the picture at any width. */
+.party {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1600 / 720;
+  container-type: inline-size;
+  background: #1c63b8 url("../assets/party-bg.webp") center / 100% 100% no-repeat;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- slots (x in px of the 1600-wide screenshot: 197 / 397 / 598 / 813 / 1013 / 1214, width 191) ---- */
+.card {
+  position: absolute;
+  top: 16.25%;      /* 117 / 720 */
+  height: 65.7%;    /* 473 / 720 */
+  width: 11.94%;    /* 191 / 1600 */
+  padding: 0;
+  border: 0;
+  border-radius: 0.6cqw;
+  overflow: hidden;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  perspective: 600px;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.card:nth-of-type(1) { left: 12.31%; }
+.card:nth-of-type(2) { left: 24.81%; }
+.card:nth-of-type(3) { left: 37.38%; }
+.card:nth-of-type(4) { left: 50.81%; }
+.card:nth-of-type(5) { left: 63.31%; }
+.card:nth-of-type(6) { left: 75.88%; }
+
+.card:hover,
+.card:focus-visible {
+  box-shadow: 0 0 0 0.25cqw var(--gold), 0 0 2cqw rgba(230, 196, 106, 0.55);
+  outline: none;
+}
+.card.drawn:hover,
+.card.drawn:focus-visible { transform: translateY(-0.5cqw); }
+
+.card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+.card.has-image img { display: block; }
+
+.card .no {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 3cqw 0.4cqw 0.5cqw;
+  background: linear-gradient(180deg, transparent, rgba(8, 11, 22, 0.9));
+  font-size: 1.1cqw;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  display: none;
+}
+.card.drawn .no { display: block; }
+
+/* image missing or still loading: show the number on a plain panel */
+.card .back {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2cqw;
+  font-weight: 700;
+  color: var(--gold-dim);
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0 8px, transparent 8px 16px),
+    #1b2440;
+}
+.card.drawn:not(.has-image) .back { display: flex; }
+
+@keyframes reveal {
+  from { transform: rotateY(90deg) scale(0.9); opacity: 0; }
+  to   { transform: rotateY(0)     scale(1);   opacity: 1; }
+}
+/* backwards: hold the first frame during the stagger delay, but leave nothing applied once finished */
+.card.reveal { animation: reveal 0.45s ease-out backwards; animation-delay: calc(var(--i, 0) * 90ms); }
+
+/* ---- cost box: sits over the baked-in "TOTAL COST 0/114" of the screenshot ---- */
+.cost {
+  position: absolute;
+  left: 74.4%;      /* 1190 / 1600 */
+  top: 84.2%;       /* 606 / 720 */
+  width: 9.6%;      /* 154 / 1600 */
+  height: 11.4%;    /* 82 / 720 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 0.15cqw solid #8fc1ff;
+  border-radius: 0.5cqw;
+  background: linear-gradient(180deg, #123d86, #0b2860);
+  box-shadow: inset 0 0 1cqw rgba(143, 193, 255, 0.35);
+  color: #fff;
+  text-align: center;
+  line-height: 1.15;
+  pointer-events: none;
+}
+.cost-label {
+  font-size: 0.95cqw;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #cfe3ff;
+}
+.cost-value {
+  white-space: nowrap;
+  font-size: 2.1cqw;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 0.6cqw rgba(143, 193, 255, 0.6);
+}
+.cost-value b { font-weight: 700; }
+
+/* ---- footer ---- */
+footer { text-align: center; }
+
+#draw {
+  padding: 14px 44px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #34406e, #232c50);
+  color: var(--gold);
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: box-shadow 0.15s, transform 0.1s;
+}
+#draw:hover { box-shadow: 0 0 20px rgba(230, 196, 106, 0.4); }
+#draw:active { transform: scale(0.97); }
+#draw:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+
+.hint { margin: 12px 0 0; font-size: 13px; color: var(--muted); }
+.credit { margin: 28px 0 0; font-size: 12px; line-height: 1.7; color: var(--muted); }
+.credit a { color: var(--gold-dim); }
+kbd {
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card.reveal { animation: none; }
+  .card { transition: none; }
+}
