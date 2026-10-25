@@ -12,6 +12,8 @@
   const servants = Array.isArray(window.SERVANTS) ? window.SERVANTS : [];
   const statusEl = document.getElementById('status');
   const drawBtn = document.getElementById('draw');
+  const nextBtn = document.getElementById('next');
+  const resetBtn = document.getElementById('reset');
   const partyEl = document.querySelector('.party');
   const costNowEl = document.getElementById('cost-now');
   document.getElementById('cost-max').textContent = MAX_COST;
@@ -112,6 +114,24 @@
     card.classList.add('reveal');
   }
 
+  // back to the empty "SELECT" slot of the screenshot
+  function clearSlot(i) {
+    const card = cards[i];
+    card.classList.remove('has-image', 'drawn', 'reveal');
+    card.querySelector('img').removeAttribute('src');
+    card.querySelector('.stars').replaceChildren();
+    card.querySelector('.name').textContent = '';
+    card.querySelector('.no').textContent = '';
+    card.querySelector('.back').textContent = '?';
+    card.setAttribute('aria-label', `${i + 1}番目の枠`);
+  }
+
+  // "next" only makes sense while a slot is free, "reset" only while one is filled
+  function updateButtons() {
+    nextBtn.disabled = party.every(Boolean);
+    resetBtn.disabled = party.every((s) => !s);
+  }
+
   function drawParty() {
     if (servants.length < PARTY_SIZE) return;
     party =
@@ -120,12 +140,27 @@
         : shuffle(servants.slice()).slice(0, PARTY_SIZE);
     party.forEach((_, i) => renderSlot(i, i));
     renderCost();
+    updateButtons();
     refillQueue();
   }
 
+  // fill the leftmost empty slot with one servant
+  function drawNext() {
+    const i = party.findIndex((s) => !s);
+    if (i !== -1) rerollSlot(i);
+  }
+
+  function resetParty() {
+    party = new Array(PARTY_SIZE).fill(null);
+    cards.forEach((_, i) => clearSlot(i));
+    renderCost();
+    updateButtons();
+    refillQueue();
+  }
+
+  // draws into slot i; works for both an empty slot (fill) and a filled one (reroll)
   function rerollSlot(i) {
-    if (!party[i]) return drawParty();
-    const taken = new Set(party.map((s) => s.no));
+    const taken = new Set(party.filter(Boolean).map((s) => s.no));
     let next = queue.find((s) => !taken.has(s.no));
     if (next) {
       queue = queue.filter((s) => s !== next);
@@ -137,13 +172,17 @@
     party[i] = next;
     renderSlot(i, 0);
     renderCost();
+    updateButtons();
     refillQueue();
   }
 
   function init() {
     buildCards();
+    updateButtons();
     if (servants.length < PARTY_SIZE) {
       drawBtn.disabled = true;
+      nextBtn.disabled = true;
+      resetBtn.disabled = true;
       setStatus(
         servants.length === 0
           ? 'サーヴァントの一覧が空です。tools/build-list.ps1 を実行してください。'
@@ -155,6 +194,8 @@
     setStatus(`引けるサーヴァント ${servants.length}騎`);
     refillQueue(); // start downloading the first party before the button is pressed
     drawBtn.addEventListener('click', drawParty);
+    nextBtn.addEventListener('click', drawNext);
+    resetBtn.addEventListener('click', resetParty);
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Space' && e.target === document.body) {
         e.preventDefault();
