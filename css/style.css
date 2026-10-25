@@ -105,6 +105,28 @@ h1 {
 }
 .card.has-image img { display: block; }
 
+/* rarity stars at the top of the card, drawn with clip-path so they stay sharp at any size */
+.card .stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  justify-content: center;
+  gap: 0.1cqw;
+  padding: 0.5cqw 0 2.4cqw;
+  background: linear-gradient(180deg, rgba(8, 11, 22, 0.6), transparent);
+  filter: drop-shadow(0 0 0.25cqw rgba(0, 0, 0, 0.95));
+  pointer-events: none;
+}
+.card.drawn .stars { display: flex; }
+.card .stars i {
+  width: 1.55cqw;
+  height: 1.55cqw;
+  background: linear-gradient(180deg, #fff3b0, #f2b922 60%, #d98e0c);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
 /* name above the number, over a dark fade at the bottom of the card */
 .card .label {
   position: absolute;

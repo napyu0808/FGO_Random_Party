@@ -77,6 +77,7 @@
       card.setAttribute('aria-label', `${i + 1}番目の枠`);
       card.innerHTML =
         '<span class="back">?</span><img alt="" referrerpolicy="no-referrer">' +
+        '<span class="stars"></span>' +
         '<span class="label"><span class="name"></span><span class="no"></span></span>';
       card.addEventListener('click', () => rerollSlot(i));
 
@@ -95,10 +96,14 @@
     const img = card.querySelector('img');
 
     card.classList.remove('has-image', 'drawn', 'reveal');
+    // one star per rarity point; rarity 0 (Anri Mayu) shows none
+    card.querySelector('.stars').replaceChildren(
+      ...Array.from({ length: s.r || 0 }, () => document.createElement('i'))
+    );
     card.querySelector('.name').textContent = s.n || '';
     card.querySelector('.no').textContent = `No.${s.no}`;
     card.querySelector('.back').textContent = `No.${s.no}`;
-    card.setAttribute('aria-label', `${i + 1}番目の枠: No.${s.no} ${s.n || ''}`.trim());
+    card.setAttribute('aria-label', `${i + 1}番目の枠: No.${s.no} ${s.n || ''} ★${s.r || 0}`.trim());
     img.src = imageUrl(s);
 
     card.classList.add('drawn');
