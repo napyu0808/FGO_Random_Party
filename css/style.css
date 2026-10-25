@@ -233,9 +233,10 @@ footer { text-align: center; }
   gap: 14px;
 }
 
-#draw,
-.buttons .sub {
-  padding: 14px 44px;
+/* all three buttons share one size and design */
+.buttons button {
+  min-width: 210px;
+  padding: 14px 24px;
   border: 1px solid var(--gold);
   border-radius: 999px;
   background: linear-gradient(180deg, #34406e, #232c50);
@@ -247,22 +248,9 @@ footer { text-align: center; }
   cursor: pointer;
   transition: box-shadow 0.15s, transform 0.1s;
 }
-/* secondary buttons: same look, a bit smaller and quieter than the main draw button */
-.buttons .sub {
-  padding: 11px 28px;
-  font-size: 15px;
-  letter-spacing: 0.06em;
-  border-color: var(--gold-dim);
-  color: var(--text);
-  background: linear-gradient(180deg, #2a3560, #1d2545);
-}
-
-#draw:hover,
-.buttons .sub:hover { box-shadow: 0 0 20px rgba(230, 196, 106, 0.4); }
-#draw:active,
-.buttons .sub:active { transform: scale(0.97); }
-#draw:disabled,
-.buttons .sub:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; transform: none; }
+.buttons button:hover { box-shadow: 0 0 20px rgba(230, 196, 106, 0.4); }
+.buttons button:active { transform: scale(0.97); }
+.buttons button:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; transform: none; }
 
 .hint { margin: 12px 0 0; font-size: 13px; color: var(--muted); }
 .credit { margin: 28px 0 0; font-size: 12px; line-height: 1.7; color: var(--muted); }

@@ -126,12 +126,6 @@
     card.setAttribute('aria-label', `${i + 1}番目の枠`);
   }
 
-  // "next" only makes sense while a slot is free, "reset" only while one is filled
-  function updateButtons() {
-    nextBtn.disabled = party.every(Boolean);
-    resetBtn.disabled = party.every((s) => !s);
-  }
-
   function drawParty() {
     if (servants.length < PARTY_SIZE) return;
     party =
@@ -140,7 +134,6 @@
         : shuffle(servants.slice()).slice(0, PARTY_SIZE);
     party.forEach((_, i) => renderSlot(i, i));
     renderCost();
-    updateButtons();
     refillQueue();
   }
 
@@ -154,7 +147,6 @@
     party = new Array(PARTY_SIZE).fill(null);
     cards.forEach((_, i) => clearSlot(i));
     renderCost();
-    updateButtons();
     refillQueue();
   }
 
@@ -172,17 +164,15 @@
     party[i] = next;
     renderSlot(i, 0);
     renderCost();
-    updateButtons();
     refillQueue();
   }
 
   function init() {
     buildCards();
-    updateButtons();
     if (servants.length < PARTY_SIZE) {
       drawBtn.disabled = true;
-      nextBtn.disabled = true;
-      resetBtn.disabled = true;
+      if (nextBtn) nextBtn.disabled = true;
+      if (resetBtn) resetBtn.disabled = true;
       setStatus(
         servants.length === 0
           ? 'サーヴァントの一覧が空です。tools/build-list.ps1 を実行してください。'
@@ -194,8 +184,9 @@
     setStatus(`引けるサーヴァント ${servants.length}騎`);
     refillQueue(); // start downloading the first party before the button is pressed
     drawBtn.addEventListener('click', drawParty);
-    nextBtn.addEventListener('click', drawNext);
-    resetBtn.addEventListener('click', resetParty);
+    // ?. keeps the page working even if a cached older index.html lacks these buttons
+    nextBtn?.addEventListener('click', drawNext);
+    resetBtn?.addEventListener('click', resetParty);
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Space' && e.target === document.body) {
         e.preventDefault();

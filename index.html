@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title>FGO ランダムパーティ</title>
-  <link rel="stylesheet" href="css/style.css">
+  <!-- ?v=N on the assets makes browsers fetch fresh files after a deploy; bump N when releasing -->
+  <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
   <main>
@@ -24,9 +25,9 @@
 
     <footer>
       <div class="buttons">
-        <button id="next" class="sub" type="button">1騎ずつ引く</button>
+        <button id="next" type="button">1騎ずつ引く</button>
         <button id="draw" type="button">パーティを引く</button>
-        <button id="reset" class="sub" type="button">リセット</button>
+        <button id="reset" type="button">リセット</button>
       </div>
       <p class="hint">カードを押すとその枠だけ引き直します（空の枠はその枠だけ引きます） · <kbd>Space</kbd> 全員引き直し</p>
       <p class="credit">
@@ -37,7 +38,7 @@
     </footer>
   </main>
 
-  <script src="data/servants.js"></script>
-  <script src="js/main.js"></script>
+  <script src="data/servants.js?v=3"></script>
+  <script src="js/main.js?v=3"></script>
 </body>
 </html>
