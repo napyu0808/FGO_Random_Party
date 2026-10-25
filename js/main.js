@@ -74,7 +74,7 @@
       const card = document.createElement('button');
       card.type = 'button';
       card.className = 'card';
-      card.setAttribute('aria-label', `${i + 1}번 자리`);
+      card.setAttribute('aria-label', `${i + 1}番目の枠`);
       card.innerHTML = '<span class="back">?</span><img alt="" referrerpolicy="no-referrer"><span class="no"></span>';
       card.addEventListener('click', () => rerollSlot(i));
 
@@ -95,7 +95,7 @@
     card.classList.remove('has-image', 'drawn', 'reveal');
     card.querySelector('.no').textContent = `No.${s.no}`;
     card.querySelector('.back').textContent = `No.${s.no}`;
-    card.setAttribute('aria-label', `${i + 1}번 자리: No.${s.no}`);
+    card.setAttribute('aria-label', `${i + 1}番目の枠: No.${s.no}`);
     img.src = imageUrl(s);
 
     card.classList.add('drawn');
@@ -138,13 +138,13 @@
       drawBtn.disabled = true;
       setStatus(
         servants.length === 0
-          ? '서번트 목록이 비어 있어요. tools/build-list.ps1 을 실행해 주세요.'
-          : `서번트가 ${servants.length}명뿐이에요. ${PARTY_SIZE}명 이상 필요합니다.`,
+          ? 'サーヴァントの一覧が空です。tools/build-list.ps1 を実行してください。'
+          : `サーヴァントが${servants.length}騎しかいません。${PARTY_SIZE}騎以上必要です。`,
         true
       );
       return;
     }
-    setStatus(`뽑을 수 있는 서번트 ${servants.length}명`);
+    setStatus(`引けるサーヴァント ${servants.length}騎`);
     refillQueue(); // start downloading the first party before the button is pressed
     drawBtn.addEventListener('click', drawParty);
     document.addEventListener('keydown', (e) => {

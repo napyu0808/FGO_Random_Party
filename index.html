@@ -1,33 +1,33 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ja">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FGO 랜덤 파티</title>
+  <title>FGO ランダムパーティ</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <main>
     <header>
-      <h1>FGO 랜덤 파티</h1>
+      <h1>FGO ランダムパーティ</h1>
       <p id="status" role="status"></p>
     </header>
 
     <!-- slots and the cost box are positioned over the formation screenshot (see css/style.css) -->
-    <section class="party" aria-label="파티">
-      <div class="cost" aria-label="코스트">
+    <section class="party" aria-label="パーティ">
+      <div class="cost" aria-label="コスト">
         <span class="cost-label">TOTAL COST</span>
         <span class="cost-value"><b id="cost-now">0</b> / <span id="cost-max">118</span></span>
       </div>
     </section>
 
     <footer>
-      <button id="draw" type="button">파티 뽑기</button>
-      <p class="hint">카드를 누르면 그 자리만 다시 뽑아요 · <kbd>Space</kbd> 전체 뽑기</p>
+      <button id="draw" type="button">パーティを引く</button>
+      <p class="hint">カードを押すとその枠だけ引き直します · <kbd>Space</kbd> 全員引き直し</p>
       <p class="credit">
-        서번트 데이터·이미지: <a href="https://atlasacademy.io" target="_blank" rel="noopener">Atlas Academy</a>
+        サーヴァントのデータ・画像：<a href="https://atlasacademy.io" target="_blank" rel="noopener">Atlas Academy</a>
         (<a href="https://opendatacommons.org/licenses/by/1-0/" target="_blank" rel="noopener">ODC-BY 1.0</a>)<br>
-        Fate/Grand Order &copy; TYPE-MOON / FGO PROJECT · 비공식 팬 제작 페이지입니다.
+        Fate/Grand Order &copy; TYPE-MOON / FGO PROJECT · 非公式のファン制作ページです。
       </p>
     </footer>
   </main>

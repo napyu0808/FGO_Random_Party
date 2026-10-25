@@ -19,7 +19,7 @@ body {
     radial-gradient(ellipse at 50% -10%, #25305a 0%, transparent 60%),
     linear-gradient(180deg, var(--bg-2), var(--bg));
   color: var(--text);
-  font-family: "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
+  font-family: "Noto Sans JP", "Yu Gothic UI", "Yu Gothic", "Meiryo", system-ui, sans-serif;
 }
 
 main {
